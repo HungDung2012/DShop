@@ -108,6 +108,10 @@ header {
     width: 65%;
 }
 
+.form-search-btn {
+    border: 0px;
+}
+
 .filter-btn {
     background-color: var(--red);
     height: 30px;
@@ -259,7 +263,6 @@ header {
     margin-bottom: 0px;
 }
 
-
 .menu-link {
     color: var(--black);
     display: inline-block;
@@ -281,6 +284,24 @@ header {
     opacity: 1;
 }
 
+.menu-link.active {
+    color: var(--red);
+    position: relative;
+}
+
+.menu-link.active::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background-color: var(--red);
+    visibility: visible;
+    transform: scale(1);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
 
 .menu-link::after {
     content: "";
@@ -531,6 +552,7 @@ header {
     line-height: 27px;
     border-radius: 50%;
     font-size: 15px;
+    text-decoration: none;
 }
 
 .page-nav-item.active a,.page-nav-item a:hover {

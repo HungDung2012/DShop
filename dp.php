@@ -1,7 +1,7 @@
 <?php
     // $con = mysqli_connect("localhost","root", "", "restaurant_management");
     define('DATABASE_SERVER', 'localhost');
-    define('DATABASE_USER', 'root');
+    define('DATABASE_USER', 'db');
     define('DATABASE_PASSWORD', '');
     define('DATABASE_NAME', 'restaurant_management');
     $connection = null;

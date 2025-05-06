@@ -48,14 +48,97 @@
                 </div>
             </div>
             <div class="home-title-block" id="home-title">
-                <h2 class="home-title">Khám phá thực đơn của chúng tôi</h2>
-            </div>
+        <h2 class="home-title">Khám phá thực đơn của chúng tôi</h2>
+        </div>
             <div class="home-products" id="home-products">
-                <?php getMProduct(); ?>
+                <?php
+
+                    $per_page = 12;
+
+                    if (isset($_GET['page'])) {
+                        $page = $_GET['page'];
+                    } else {
+                        $page = 1;
+                    }
+                    
+
+                    $start_from = ($page - 1) * $per_page;
+                    $get_products = "select * from products LIMIT $start_from,$per_page";
+                    $run_products = mysqli_query($db, $get_products);
+
+                    while($row_products = mysqli_fetch_array($run_products)) {
+                        $id = $row_products['id'];
+                        $title = $row_products['title'];
+                        $price = $row_products['price'];
+                        $img = $row_products['img'];
+
+                        echo "
+                            <div class='col-product'>
+                                <article class='card-product'>
+                                    <div class='card-header'>
+                                        <a href='#' class='card-image-link'>
+                                            <img class='card-image' src='$img' alt='$title'>
+                                        </a>
+                                    </div>
+                                    <div class='food-info'>
+                                        <div class='card-content'>
+                                            <div class='product-card-title'>
+                                                <a href='#' class='card-title-link'>$title</a>
+                                            </div>
+                                        </div>
+                                        <div class='product-card-footer'>
+                                            <div class='product-price'>
+                                                <span class='current-price'>" . wpshare247_format_money($price) . "</span>
+                                            </div>
+                                        </div>
+                                        <div class='product-buy'>
+                                            <button class='card-button order-item'>
+                                                <i class='fa-solid fa-cart-shopping'></i> 
+                                                Đặt món
+                                            </button>
+                                        </div> 
+                                    </div>
+                                </article>
+                            </div>
+                        ";
+                    }
+                ?>
+
             </div>
             <div class="page-nav">
                 <ul class="page-nav-list">
-                    
+                    <?php
+
+                        $query = "select * from products";
+                        $result = mysqli_query($db, $query);
+
+                        $total_records = mysqli_num_rows($result);
+
+                        $total_pages = ($total_records / $per_page);
+
+                        $total_pages = ceil($total_pages);
+
+                        if ($total_pages <= 1) {
+                            echo "";
+                        } else {
+
+                            for ($i = 1; $i <= $total_pages; $i++) {
+                                $active = '';
+                                if(isset($_GET['page']) && $_GET['page'] == $i) {
+                                    $active = 'active';
+                                }
+                                else if(!isset($_GET['page']) && $i == 1) {
+                                    $active = 'active'; 
+                                }
+                                echo "
+                                    <li class='page-nav-item $active'>
+                                        <a href='home-product.php?page=" . $i . "'>
+                                            " . $i . "</a>
+                                    </li>
+                                ";
+                            }
+                        } 
+                    ?>
                 </ul>
             </div>
         </div>
@@ -251,7 +334,7 @@
     </div> -->
     
     <?php
-    include('footer.php');
+        include('footer.php');
     ?>
 <!-- <script>alert("This is javascript code");</script> -->
 </body> 
