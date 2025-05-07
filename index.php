@@ -52,7 +52,6 @@
         </div>
             <div class="home-products" id="home-products">
                 <?php
-
                     $per_page = 12;
 
                     if (isset($_GET['page'])) {
@@ -60,7 +59,6 @@
                     } else {
                         $page = 1;
                     }
-                    
 
                     $start_from = ($page - 1) * $per_page;
                     $get_products = "select * from products LIMIT $start_from,$per_page";
@@ -71,19 +69,20 @@
                         $title = $row_products['title'];
                         $price = $row_products['price'];
                         $img = $row_products['img'];
+                        $description = $row_products['description'];
 
                         echo "
                             <div class='col-product'>
                                 <article class='card-product'>
                                     <div class='card-header'>
-                                        <a href='#' class='card-image-link'>
+                                        <a href='javascript:void(0);' class='card-image-link' onclick='detailProduct($id)'>
                                             <img class='card-image' src='$img' alt='$title'>
                                         </a>
                                     </div>
                                     <div class='food-info'>
                                         <div class='card-content'>
                                             <div class='product-card-title'>
-                                                <a href='#' class='card-title-link'>$title</a>
+                                                <a href='javascript:void(0);' class='card-title-link'  onclick='detailProduct($id)'>$title</a>
                                             </div>
                                         </div>
                                         <div class='product-card-footer'>
@@ -92,7 +91,7 @@
                                             </div>
                                         </div>
                                         <div class='product-buy'>
-                                            <button class='card-button order-item'>
+                                            <button class='card-button order-item' onclick='detailProduct($id)'>
                                                 <i class='fa-solid fa-cart-shopping'></i> 
                                                 Đặt món
                                             </button>
