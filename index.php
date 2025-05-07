@@ -141,7 +141,7 @@
                 </ul>
             </div>
         </div>
-        <!-- <div class="container" id="account-user">
+        <div class="container" id="account-user">
             <div class="main-account">
                 <div class="main-account-header">
                     <h3>Thông tin tài khoản của bạn</h3>
@@ -222,10 +222,10 @@
     </main>
     
     <div class="modal product-detail">
-        <button class="modal-close close-popup"><i class="fa-thin fa-xmark"></i></button>
+        <button class="modal-close close-popup"><i class="fa-solid fa-xmark"></i></button>
         <div class="modal-container mdl-cnt" id="product-detail-content">
         </div>
-    </div>
+    </div> 
     <div class="modal signup-login">
         <div class="modal-container">
             <button class="form-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -296,7 +296,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+
     <div class="modal-cart">
         <div class="cart-container">
             <div class="cart-header">
@@ -330,11 +331,15 @@
             <div class="detail-order-content">
             </div>
         </div>
-    </div> -->
+    </div> 
     
     <?php
         include('footer.php');
     ?>
+    <script src="./js/initialization.js"></script> 
+    <script src="./js/main.js"></script>
+    <script src="./js/checkout.js"></script>
+   
 <!-- <script>alert("This is javascript code");</script> -->
 </body> 
 

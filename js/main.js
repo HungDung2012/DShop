@@ -82,7 +82,7 @@ function detailProduct(index) {
         </div>
         <div class="modal-footer-control">
             <button class="button-dathangngay" data-product="${infoProduct.id}">Đặt hàng ngay</button>
-            <button class="button-dat" id="add-cart" onclick="animationCart()"><i class="fa-light fa-basket-shopping"></i></button>
+            <button class="button-dat" id="add-cart" onclick="animationCart()"><i class="fa-solid fa-basket-shopping"></i></button>
         </div>
     </div>`;
     document.querySelector('#product-detail-content').innerHTML = modalHtml;
@@ -212,7 +212,10 @@ function deleteCartItem(id, el) {
 
 //Update cart total
 function updateCartTotal() {
-    document.querySelector('.text-price').innerText = vnd(getCartTotal());
+    let textPriceElement = document.querySelector('.text-price');
+    if (textPriceElement) {
+        textPriceElement.innerText = vnd(getCartTotal());
+    }
 }
 
 // Lay tong tien don hang

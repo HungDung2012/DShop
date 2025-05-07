@@ -54,11 +54,11 @@
                                 <span class="text-tk">Tài khoản <i class="fa-sharp fa-solid fa-caret-down"></i></span>
                             </div>
                             <ul class="header-middle-right-menu">
-                                <li><a id="login" href=""><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a></li>
-                                <li><a id="signup" href=""><i class="fa-solid fa-user-plus"></i> Đăng ký</a></li>
+                                <li><a id="login" href="javascript:;"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a></li>
+                                <li><a id="signup" href="javascript:;"><i class="fa-solid fa-user-plus"></i> Đăng ký</a></li>
                             </ul>
                         </li>
-                        <li class="header-middle-right-item open">
+                        <li class="header-middle-right-item open" onclick="openCart()">
                             <div class="cart-icon-menu">
                                 <i class="fa-solid fa-basket-shopping"></i>
                                 <span class="count-product-cart">0</span>
