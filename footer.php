@@ -164,7 +164,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="back-to-top">
+    <div class="back-to-top">
         <a href="#"><i class="fa-solid fa-arrow-up"></i></a>
     </div>
     <div class="checkout-page">
@@ -308,6 +308,7 @@
                 <button class="complete-checkout-btn">Đặt hàng</button>
             </div>
         </main>
-    </div>-->
+    </div>
 
 
+   

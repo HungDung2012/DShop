@@ -54,7 +54,11 @@
                                 <span class="text-tk">Tài khoản <i class="fa-sharp fa-solid fa-caret-down"></i></span>
                             </div>
                             <ul class="header-middle-right-menu">
-                                <li><a id="login" href="javascript:;"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a></li>
+                                <li>
+                                    <a id="login" href="javascript:;">
+                                        <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập
+                                    </a>
+                                </li>
                                 <li><a id="signup" href="javascript:;"><i class="fa-solid fa-user-plus"></i> Đăng ký</a></li>
                             </ul>
                         </li>
@@ -70,6 +74,78 @@
             </div>
         </div>
     </header>
+
+    <div class="modal signup-login">
+        <div class="modal-container">
+            <button class="form-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="forms mdl-cnt">
+                <div class="form-content sign-up">
+                    <h3 class="form-title">
+                        Đăng ký tài khoản
+                    </h3>
+                    <p class="form-description">Đăng ký thành viên để mua hàng và nhận những ưu đãi đặc biệt từ chúng
+                        tôi </p>
+                    <form action="" class="signup-form">
+                        <div class="form-group">
+                            <label for="fullname" class="form-label">Tên đầy đủ</label>
+                            <input id="fullname" name="fullname" type="text" placeholder="VD: Nhật Sinh"
+                                class="form-control">
+                            <span class="form-message-name form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Số điện thoại</label>
+                            <input id="phone" name="phone" type="text" placeholder="Nhập số điện thoại"
+                                class="form-control">
+                            <span class="form-message-phone form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input id="password" name="password" type="password" placeholder="Nhập mật khẩu"
+                                class="form-control">
+                            <span class="form-message-password form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
+                            <input id="password_confirmation" name="password_confirmation"
+                                placeholder="Nhập lại mật khẩu" type="password" class="form-control">
+                            <span class="form-message-password-confi form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input class="checkbox" name="checkbox" required="" type="checkbox" id="checkbox-signup">
+                            <label for="checkbox-signup" class="form-checkbox">Tôi đồng ý với <a href="#"
+                                    title="chính sách trang web" target="_blank">chính sách trang web</a></label>
+                            <p class="form-message-checkbox form-message"></p>
+                        </div>
+                        <button class="form-submit" id="signup-button">Đăng ký</button>
+                    </form>
+                    <p class="change-login">Bạn đã có tài khoản ? <a href="javascript:;" class="login-link">Đăng nhập
+                            ngay</a></p>
+                </div>
+                <div class="form-content login">
+                    <h3 class="form-title">Đăng nhập tài khoản</h3>
+                    <p class="form-description">Đăng nhập thành viên để mua hàng và nhận những ưu đãi đặc biệt từ chúng
+                        tôi</p>
+                    <form action="" class="login-form">
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Số điện thoại</label>
+                            <input id="phone-login" name="phone" type="text" placeholder="Nhập số điện thoại"
+                                class="form-control">
+                            <span class="form-message phonelog"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input id="password-login" name="password" type="password" placeholder="Nhập mật khẩu"
+                                class="form-control">
+                            <span class="form-message-check-login form-message"></span>
+                        </div>
+                        <button class="form-submit" id="login-button">Đăng nhập</button>
+                    </form>
+                    <p class="change-login">Bạn chưa có tài khoản ? <a href="javascript:;" class="signup-link">Đăng kí
+                            ngay</a></p>
+                </div>
+            </div>
+        </div>
+    </div> 
 
 
     <nav class="header-bottom">
@@ -101,5 +177,6 @@
         </div>
     </nav>
 
+                            
 
     <!-- Header End -->

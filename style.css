@@ -611,14 +611,6 @@ header {
 
 }
 
-.modal-close i {
-    transition: all 0.4s;
-}
-
-.modal-close:hover i {
-    transform: rotate(180deg)
-}
-
 .modal-container {
     background-color: var(--white);
     max-height: calc(100vh - 60px);

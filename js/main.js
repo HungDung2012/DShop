@@ -11,7 +11,8 @@ let formLogSign = document.querySelector('.forms');
 
 // Click vùng ngoài sẽ tắt Popup
 modalContainer.forEach(item => {
-    item.addEventListener('click', closeModal);
+
+    item.addEventListener('click', closeModal());
 });
 
 modalBox.forEach(item => {
@@ -24,7 +25,6 @@ function closeModal() {
     modalContainer.forEach(item => {
         item.classList.remove('open');
     });
-    console.log(modalContainer)
     body.style.overflow = "auto";
 }
 
@@ -46,16 +46,55 @@ function decreasingNumber(e) {
     }
 }
 
-//Xem chi tiet san pham
+// First, define the dathangngay function before detailProduct
+function dathangngay() {
+    const productInfo = document.getElementById("product-detail-content");
+    if (!productInfo) return;
+    
+    const datHangNgayBtn = productInfo.querySelector(".button-dathangngay");
+    if (!datHangNgayBtn) return;
+
+    datHangNgayBtn.onclick = () => {
+        if(localStorage.getItem('currentuser')) {
+            const productId = datHangNgayBtn.getAttribute("data-product");
+            const soluong = parseInt(productInfo.querySelector(".buttons_added .input-qty").value);
+            const notevalue = productInfo.querySelector("#popup-detail-note").value;
+            const ghichu = notevalue == "" ? "Không có ghi chú" : notevalue;
+            const products = JSON.parse(localStorage.getItem('products'));
+            const product = products.find(item => item.id == productId);
+            if (product) {
+                product.soluong = parseInt(soluong);
+                product.note = ghichu;
+                const checkoutpage = document.querySelector('.checkout-page');
+                if (checkoutpage) {
+                    checkoutpage.classList.add('active');
+                    thanhtoanpage(2, product);
+                    closeCart();
+                    document.body.style.overflow = "hidden";
+                }
+            }
+        } else {
+            toast({ 
+                title: 'Warning', 
+                message: 'Chưa đăng nhập tài khoản !', 
+                type: 'warning', 
+                duration: 3000 
+            });
+        }
+    };
+}
+
+// Then define the detailProduct function that uses dathangngay
 function detailProduct(index) {
     let modal = document.querySelector('.modal.product-detail');
     let products = JSON.parse(localStorage.getItem('products'));
     event.preventDefault();
     let infoProduct = products.find(sp => {
         return sp.id === index;
-    })
+    });
+    
     let modalHtml = `<div class="modal-header">
-    <img class="product-image" src="${infoProduct.img}" alt="">
+        <img class="product-image" src="${infoProduct.img}" alt="">
     </div>
     <div class="modal-body">
         <h2 class="product-title">${infoProduct.title}</h2>
@@ -72,8 +111,8 @@ function detailProduct(index) {
         <p class="product-description">${infoProduct.desc}</p>
     </div>
     <div class="notebox">
-            <p class="notebox-title">Ghi chú</p>
-            <textarea class="text-note" id="popup-detail-note" placeholder="Nhập thông tin cần lưu ý..."></textarea>
+        <p class="notebox-title">Ghi chú</p>
+        <textarea class="text-note" id="popup-detail-note" placeholder="Nhập thông tin cần lưu ý..."></textarea>
     </div>
     <div class="modal-footer">
         <div class="price-total">
@@ -85,10 +124,12 @@ function detailProduct(index) {
             <button class="button-dat" id="add-cart" onclick="animationCart()"><i class="fa-solid fa-basket-shopping"></i></button>
         </div>
     </div>`;
+    
     document.querySelector('#product-detail-content').innerHTML = modalHtml;
     modal.classList.add('open');
-    body.style.overflow = "hidden";
-    //Cap nhat gia tien khi tang so luong san pham
+    document.body.style.overflow = "hidden";
+    
+    // Update price when quantity changes
     let tgbtn = document.querySelectorAll('.is-form');
     let qty = document.querySelector('.product-control .input-qty');
     let priceText = document.querySelector('.price');
@@ -98,17 +139,16 @@ function detailProduct(index) {
             priceText.innerHTML = vnd(price);
         });
     });
-    // Them san pham vao gio hang
+    
+    // Add to cart functionality
     let productbtn = document.querySelector('.button-dat');
     productbtn.addEventListener('click', (e) => {
         if (localStorage.getItem('currentuser')) {
             addCart(infoProduct.id);
-        } else {
-            toast({ title: 'Warning', message: 'Chưa đăng nhập tài khoản !', type: 'warning', duration: 3000 });
         }
-
-    })
-    // Mua ngay san pham
+    });
+    
+    // Initialize dathangngay functionality
     dathangngay();
 }
 
@@ -296,11 +336,16 @@ function closeCart() {
 }
 
 // Open Search Advanced
-document.querySelector(".filter-btn").addEventListener("click",(e) => {
-    e.preventDefault();
-    document.querySelector(".advanced-search").classList.toggle("open");
-    document.getElementById("home-service").scrollIntoView();
-})
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtn = document.querySelector(".filter-btn");
+    if (filterBtn) {
+        filterBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            document.querySelector(".advanced-search").classList.toggle("open");
+            document.getElementById("home-service").scrollIntoView();
+        });
+    }
+});
 
 document.querySelector(".form-search-input").addEventListener("click",(e) => {
     e.preventDefault();
@@ -436,19 +481,18 @@ signupButton.addEventListener('click', () => {
                 accounts.push(user);
                 localStorage.setItem('accounts', JSON.stringify(accounts));
                 localStorage.setItem('currentuser', JSON.stringify(user));
-                toast({ title: 'Thành công', message: 'Tạo thành công tài khoản !', type: 'success', duration: 3000 });
+               
                 closeModal();
                 kiemtradangnhap();
                 updateAmount();
             } else {
-                toast({ title: 'Thất bại', message: 'Tài khoản đã tồn tại !', type: 'error', duration: 3000 });
+                
             }
         } else {
-            toast({ title: 'Thất bại', message: 'Sai mật khẩu !', type: 'error', duration: 3000 });
+        
         }
     }
-}
-)
+})
 
 // Dang nhap
 loginButton.addEventListener('click', () => {
@@ -478,20 +522,20 @@ loginButton.addEventListener('click', () => {
     if (phonelog && passlog) {
         let vitri = accounts.findIndex(item => item.phone == phonelog);
         if (vitri == -1) {
-            toast({ title: 'Error', message: 'Tài khoản của bạn không tồn tại', type: 'error', duration: 3000 });
+            
         } else if (accounts[vitri].password == passlog) {
             if(accounts[vitri].status == 0) {
-                toast({ title: 'Warning', message: 'Tài khoản của bạn đã bị khóa', type: 'warning', duration: 3000 });
+               
             } else {
                 localStorage.setItem('currentuser', JSON.stringify(accounts[vitri]));
-                toast({ title: 'Success', message: 'Đăng nhập thành công', type: 'success', duration: 3000 });
+                
                 closeModal();
                 kiemtradangnhap();
                 checkAdmin();
                 updateAmount();
             }
         } else {
-            toast({ title: 'Warning', message: 'Sai mật khẩu', type: 'warning', duration: 3000 });
+           
         }
     }
 })
@@ -503,9 +547,9 @@ function kiemtradangnhap() {
         let user = JSON.parse(currentUser);
         document.querySelector('.auth-container').innerHTML = `<span class="text-dndk">Tài khoản</span>
             <span class="text-tk">${user.fullname} <i class="fa-sharp fa-solid fa-caret-down"></span>`
-        document.querySelector('.header-middle-right-menu').innerHTML = `<li><a href="javascript:;" onclick="myAccount()"><i class="fa-light fa-circle-user"></i> Tài khoản của tôi</a></li>
-            <li><a href="javascript:;" onclick="orderHistory()"><i class="fa-regular fa-bags-shopping"></i> Đơn hàng đã mua</a></li>
-            <li class="border"><a id="logout" href="javascript:;"><i class="fa-light fa-right-from-bracket"></i> Thoát tài khoản</a></li>`
+        document.querySelector('.header-middle-right-menu').innerHTML = `<li><a href="javascript:;" onclick="myAccount()"><i class="fa-solid fa-circle-user"></i> Tài khoản của tôi</a></li>
+            <li><a href="javascript:;" onclick="orderHistory()"><i class="fa-solid fa-bag-shopping"></i> Đơn hàng đã mua</a></li>
+            <li class="border"><a id="logout" href="javascript:;"><i class="fa-solid fa-right-from-bracket"></i> Thoát tài khoản</a></li>`
         document.querySelector('#logout').addEventListener('click',logOut)
     }
 }
@@ -520,17 +564,10 @@ function logOut() {
     }
     localStorage.setItem('accounts', JSON.stringify(accounts));
     localStorage.removeItem('currentuser');
-    window.location = "/";
+
+    window.open('index.php','_self');
 }
 
-function checkAdmin() {
-    let user = JSON.parse(localStorage.getItem('currentuser'));
-    if(user && user.userType == 1) {
-        let node = document.createElement(`li`);
-        node.innerHTML = `<a href="./admin.html"><i class="fa-light fa-gear"></i> Quản lý cửa hàng</a>`
-        document.querySelector('.header-middle-right-menu').prepend(node);
-    } 
-}
 
 window.onload = kiemtradangnhap();
 window.onload = checkAdmin();
@@ -601,7 +638,7 @@ function changeInformation() {
     localStorage.setItem('currentuser', JSON.stringify(user));
     localStorage.setItem('accounts', JSON.stringify(accounts));
     kiemtradangnhap();
-    toast({ title: 'Success', message: 'Cập nhật thông tin thành công !', type: 'success', duration: 3000 });
+   
 }
 
 // Đổi mật khẩu 
@@ -653,7 +690,7 @@ function changePassword() {
                                 })
                                 accountChange.password = userChange.password;
                                 localStorage.setItem('accounts', JSON.stringify(accounts));
-                                toast({ title: 'Success', message: 'Đổi mật khẩu thành công !', type: 'success', duration: 3000 });
+                               
                             } else {
                                 document.querySelector('.password-after-comfirm-error').innerHTML = 'Mật khẩu bạn nhập không trùng khớp';
                             }
@@ -803,64 +840,57 @@ function createId(arr) {
 }
 
 // Back to top
-window.onscroll = () => {
-    let backtopTop = document.querySelector(".back-to-top")
-    if (document.documentElement.scrollTop > 100) {
-        backtopTop.classList.add("active");
-    } else {
-        backtopTop.classList.remove("active");
-    }
-}
 
 // Auto hide header on scroll
-const headerNav = document.querySelector(".header-bottom");
-let lastScrollY = window.scrollY;
 
-window.addEventListener("scroll", () => {
-    if(lastScrollY < window.scrollY) {
-        headerNav.classList.add("hide")
-    } else {
-        headerNav.classList.remove("hide")
-    }
-    lastScrollY = window.scrollY;
-})
 
 // Page
 function renderProducts(showProduct) {
+    const homeTitle = document.getElementById("home-title");
+    const homeProducts = document.getElementById('home-products');
+    
+    if (!homeProducts) return; // Exit if element doesn't exist
+    
     let productHtml = '';
     if(showProduct.length == 0) {
-        document.getElementById("home-title").style.display = "none";
-        productHtml = `<div class="no-result"><div class="no-result-h">Tìm kiếm không có kết quả</div><div class="no-result-p">Xin lỗi, chúng tôi không thể tìm được kết quả hợp với tìm kiếm của bạn</div><div class="no-result-i"><i class="fa-light fa-face-sad-cry"></i></div></div>`;
+        if (homeTitle) homeTitle.style.display = "none";
+        productHtml = `<div class="no-result">
+            <div class="no-result-h">Tìm kiếm không có kết quả</div>
+            <div class="no-result-p">Xin lỗi, chúng tôi không thể tìm được kết quả hợp với tìm kiếm của bạn</div>
+            <div class="no-result-i"><i class="fa-light fa-face-sad-cry"></i></div>
+        </div>`;
     } else {
-        document.getElementById("home-title").style.display = "block";
+        if (homeTitle) homeTitle.style.display = "block";
         showProduct.forEach((product) => {
             productHtml += `<div class="col-product">
-            <article class="card-product" >
-                <div class="card-header">
-                    <a href="#" class="card-image-link" onclick="detailProduct(${product.id})">
-                    <img class="card-image" src="${product.img}" alt="${product.title}">
-                    </a>
-                </div>
-                <div class="food-info">
-                    <div class="card-content">
-                        <div class="card-title">
-                            <a href="#" class="card-title-link" onclick="detailProduct(${product.id})">${product.title}</a>
+                <article class="card-product">
+                    <div class="card-header">
+                        <a href="#" class="card-image-link" onclick="detailProduct(${product.id})">
+                            <img class="card-image" src="${product.img}" alt="${product.title}">
+                        </a>
+                    </div>
+                    <div class="food-info">
+                        <div class="card-content">
+                            <div class="card-title">
+                                <a href="#" class="card-title-link" onclick="detailProduct(${product.id})">${product.title}</a>
+                            </div>
+                        </div>
+                        <div class="product-card-footer">
+                            <div class="product-price">
+                                <span class="current-price">${vnd(product.price)}</span>
+                            </div>
+                            <div class="product-buy">
+                                <button onclick="detailProduct(${product.id})" class="card-button order-item">
+                                    <i class="fa-regular fa-cart-shopping-fast"></i> Đặt món
+                                </button>
+                            </div> 
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="product-price">
-                            <span class="current-price">${vnd(product.price)}</span>
-                        </div>
-                    <div class="product-buy">
-                        <button onclick="detailProduct(${product.id})" class="card-button order-item"><i class="fa-regular fa-cart-shopping-fast"></i> Đặt món</button>
-                    </div> 
-                </div>
-                </div>
-            </article>
-        </div>`;
+                </article>
+            </div>`;
         });
     }
-    document.getElementById('home-products').innerHTML = productHtml;
+    homeProducts.innerHTML = productHtml;
 }
 
 // Find Product
@@ -931,7 +961,7 @@ function showHomeProduct(products) {
 window.onload = showHomeProduct(JSON.parse(localStorage.getItem('products')))
 
 function setupPagination(productAll, perPage) {
-    document.querySelector('.page-nav-list').innerHTML = '';
+    document.querySelector('.page-nav-list').innerHTML = "";
     let page_count = Math.ceil(productAll.length / perPage);
     for (let i = 1; i <= page_count; i++) {
         let li = paginationChange(i, productAll, currentPage);
@@ -970,5 +1000,61 @@ function showCategory(category) {
     setupPagination(productSearch, perPage, currentPageSeach);
     document.getElementById("home-title").scrollIntoView();
 }
+
+let nutthanhtoan = document.querySelector('.thanh-toan')
+let checkoutpage = document.querySelector('.checkout-page');
+nutthanhtoan.addEventListener('click', () => {
+    // ...
+})
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Global variables
+    const body = document.querySelector("body");
+    const modalContainer = document.querySelectorAll('.modal');
+    const modalBox = document.querySelectorAll('.mdl-cnt');
+    const formLogSign = document.querySelector('.forms');
+
+    // Initialize all event listeners and functions
+    function initializeApp() {
+        // Product rendering
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+        showHomeProduct(products);
+
+        // Event listeners for modal
+        modalContainer.forEach(item => {
+            item.addEventListener('click', closeModal);
+        });
+
+        modalBox.forEach(item => {
+            item.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+
+        // Back to top button
+        
+
+        // Header navigation
+        const headerNav = document.querySelector(".header-bottom");
+        if (headerNav) {
+            let lastScrollY = window.scrollY;
+            window.addEventListener("scroll", () => {
+                if(lastScrollY < window.scrollY) {
+                    headerNav.classList.add("hide");
+                } else {
+                    headerNav.classList.remove("hide");
+                }
+                lastScrollY = window.scrollY;
+            });
+        }
+
+        // Check login status
+        kiemtradangnhap();
+        checkAdmin();
+    }
+
+    // Call initialization
+    initializeApp();
+});
 
 

@@ -196,11 +196,11 @@
                     </div>
                     <div class="main-account-body-row">
                         <div>
-                            <button id="save-info-user" onclick="changeInformation()"><i
+                            <button id="save-info-user" onclick=""><i
                                     class="fa-solid fa-floppy-disk"></i> Lưu thay đổi</button>
                         </div>
                         <div>
-                            <button id="save-password" onclick="changePassword()"><i class="fa-solid fa-key"></i> Đổi
+                            <button id="save-password" onclick=""><i class="fa-solid fa-key"></i> Đổi
                                 mật khẩu</button>
                         </div>
                     </div>
@@ -336,9 +336,9 @@
     <?php
         include('footer.php');
     ?>
-    <script src="./js/initialization.js"></script> 
-    <script src="./js/main.js"></script>
-    <script src="./js/checkout.js"></script>
+    <script src="js/initialization.js"></script> 
+    <script src="js/main.js"></script>
+    <script src="js/checkout.js"></script>
    
 <!-- <script>alert("This is javascript code");</script> -->
 </body> 
