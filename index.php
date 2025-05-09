@@ -338,7 +338,6 @@
     ?>
     <script src="js/initialization.js"></script> 
     <script src="js/main.js"></script>
-    <script src="js/checkout.js"></script>
    
 <!-- <script>alert("This is javascript code");</script> -->
 </body> 

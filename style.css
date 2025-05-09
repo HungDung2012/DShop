@@ -1372,31 +1372,19 @@ input[type=number] {
 .order-history-status-sp.complete{
     background-color: #27ae60;
     color: var(--white);
-    padding-left: 35px;
 }
 
 .order-history-status-sp.complete::before{
-    content: "\f00c";
-    font-family: "Font Awesome 6 Pro";
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
+
 }
 
 .order-history-status-sp.no-complete{
     background-color: #f04e2e;
     color: var(--white);
-    padding-left: 35px;
 }
 
 .order-history-status-sp.no-complete::before{
-    content: "\e1d4";
-    font-family: "Font Awesome 6 Pro";
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
+    
 }
 
 #order-history-detail {
@@ -2076,4 +2064,3 @@ input[type=number] {
 .header-middle-right-item.close{
     display: none;
 }
-

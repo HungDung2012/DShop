@@ -50,12 +50,12 @@ function decreasingNumber(e) {
 function dathangngay() {
     const productInfo = document.getElementById("product-detail-content");
     if (!productInfo) return;
-    
+
     const datHangNgayBtn = productInfo.querySelector(".button-dathangngay");
     if (!datHangNgayBtn) return;
 
     datHangNgayBtn.onclick = () => {
-        if(localStorage.getItem('currentuser')) {
+        if (localStorage.getItem('currentuser')) {
             const productId = datHangNgayBtn.getAttribute("data-product");
             const soluong = parseInt(productInfo.querySelector(".buttons_added .input-qty").value);
             const notevalue = productInfo.querySelector("#popup-detail-note").value;
@@ -74,11 +74,11 @@ function dathangngay() {
                 }
             }
         } else {
-            toast({ 
-                title: 'Warning', 
-                message: 'Chưa đăng nhập tài khoản !', 
-                type: 'warning', 
-                duration: 3000 
+            toast({
+                title: 'Warning',
+                message: 'Chưa đăng nhập tài khoản !',
+                type: 'warning',
+                duration: 3000
             });
         }
     };
@@ -92,7 +92,7 @@ function detailProduct(index) {
     let infoProduct = products.find(sp => {
         return sp.id === index;
     });
-    
+
     let modalHtml = `<div class="modal-header">
         <img class="product-image" src="${infoProduct.img}" alt="">
     </div>
@@ -124,11 +124,11 @@ function detailProduct(index) {
             <button class="button-dat" id="add-cart" onclick="animationCart()"><i class="fa-solid fa-basket-shopping"></i></button>
         </div>
     </div>`;
-    
+
     document.querySelector('#product-detail-content').innerHTML = modalHtml;
     modal.classList.add('open');
     document.body.style.overflow = "hidden";
-    
+
     // Update price when quantity changes
     let tgbtn = document.querySelectorAll('.is-form');
     let qty = document.querySelector('.product-control .input-qty');
@@ -139,7 +139,7 @@ function detailProduct(index) {
             priceText.innerHTML = vnd(price);
         });
     });
-    
+
     // Add to cart functionality
     let productbtn = document.querySelector('.button-dat');
     productbtn.addEventListener('click', (e) => {
@@ -147,16 +147,16 @@ function detailProduct(index) {
             addCart(infoProduct.id);
         }
     });
-    
+
     // Initialize dathangngay functionality
     dathangngay();
 }
 
 function animationCart() {
     document.querySelector(".count-product-cart").style.animation = "slidein ease 1s"
-    setTimeout(()=>{
+    setTimeout(() => {
         document.querySelector(".count-product-cart").style.animation = "none"
-    },1000)
+    }, 1000)
 }
 
 // Them SP vao gio hang
@@ -336,7 +336,7 @@ function closeCart() {
 }
 
 // Open Search Advanced
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const filterBtn = document.querySelector(".filter-btn");
     if (filterBtn) {
         filterBtn.addEventListener("click", (e) => {
@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-document.querySelector(".form-search-input").addEventListener("click",(e) => {
+document.querySelector(".form-search-input").addEventListener("click", (e) => {
     e.preventDefault();
     document.getElementById("home-service").scrollIntoView();
 })
@@ -362,7 +362,7 @@ function openSearchMb() {
     document.querySelector(".header-middle-center").style.display = "block";
     document.querySelector(".header-middle-right-item.close").style.display = "block";
     let liItem = document.querySelectorAll(".header-middle-right-item.open");
-    for(let i = 0; i < liItem.length; i++) {
+    for (let i = 0; i < liItem.length; i++) {
         liItem[i].style.setProperty("display", "none", "important")
     }
 }
@@ -373,7 +373,7 @@ function closeSearchMb() {
     document.querySelector(".header-middle-center").style.display = "none";
     document.querySelector(".header-middle-right-item.close").style.display = "none";
     let liItem = document.querySelectorAll(".header-middle-right-item.open");
-    for(let i = 0; i < liItem.length; i++) {
+    for (let i = 0; i < liItem.length; i++) {
         liItem[i].style.setProperty("display", "block", "important")
     }
 }
@@ -481,15 +481,15 @@ signupButton.addEventListener('click', () => {
                 accounts.push(user);
                 localStorage.setItem('accounts', JSON.stringify(accounts));
                 localStorage.setItem('currentuser', JSON.stringify(user));
-               
+
                 closeModal();
                 kiemtradangnhap();
                 updateAmount();
             } else {
-                
+
             }
         } else {
-        
+
         }
     }
 })
@@ -522,20 +522,19 @@ loginButton.addEventListener('click', () => {
     if (phonelog && passlog) {
         let vitri = accounts.findIndex(item => item.phone == phonelog);
         if (vitri == -1) {
-            
+
         } else if (accounts[vitri].password == passlog) {
-            if(accounts[vitri].status == 0) {
-               
+            if (accounts[vitri].status == 0) {
+
             } else {
                 localStorage.setItem('currentuser', JSON.stringify(accounts[vitri]));
-                
+
                 closeModal();
                 kiemtradangnhap();
-                checkAdmin();
                 updateAmount();
             }
         } else {
-           
+
         }
     }
 })
@@ -550,7 +549,7 @@ function kiemtradangnhap() {
         document.querySelector('.header-middle-right-menu').innerHTML = `<li><a href="javascript:;" onclick="myAccount()"><i class="fa-solid fa-circle-user"></i> Tài khoản của tôi</a></li>
             <li><a href="javascript:;" onclick="orderHistory()"><i class="fa-solid fa-bag-shopping"></i> Đơn hàng đã mua</a></li>
             <li class="border"><a id="logout" href="javascript:;"><i class="fa-solid fa-right-from-bracket"></i> Thoát tài khoản</a></li>`
-        document.querySelector('#logout').addEventListener('click',logOut)
+        document.querySelector('#logout').addEventListener('click', logOut)
     }
 }
 
@@ -565,12 +564,11 @@ function logOut() {
     localStorage.setItem('accounts', JSON.stringify(accounts));
     localStorage.removeItem('currentuser');
 
-    window.open('index.php','_self');
+    window.open('index.php', '_self');
 }
 
 
 window.onload = kiemtradangnhap();
-window.onload = checkAdmin();
 
 // Chuyển đổi trang chủ và trang thông tin tài khoản
 function myAccount() {
@@ -638,7 +636,7 @@ function changeInformation() {
     localStorage.setItem('currentuser', JSON.stringify(user));
     localStorage.setItem('accounts', JSON.stringify(accounts));
     kiemtradangnhap();
-   
+
 }
 
 // Đổi mật khẩu 
@@ -690,7 +688,7 @@ function changePassword() {
                                 })
                                 accountChange.password = userChange.password;
                                 localStorage.setItem('accounts', JSON.stringify(accounts));
-                               
+
                             } else {
                                 document.querySelector('.password-after-comfirm-error').innerHTML = 'Mật khẩu bạn nhập không trùng khớp';
                             }
@@ -720,32 +718,83 @@ function renderOrderProduct() {
     let currentUser = JSON.parse(localStorage.getItem('currentuser'));
     let order = localStorage.getItem('order') ? JSON.parse(localStorage.getItem('order')) : [];
     let orderHtml = "";
-    let arrDonHang = [];
-    for (let i = 0; i < order.length; i++) {
-        if (order[i].khachhang === currentUser.phone) {
-            arrDonHang.push(order[i]);
+    
+    let arrDonHang = [
+        {
+            id: "DH1",
+            trangthai: 0,
+            tongtien: 320000,
+            thoigiandat: "2024-03-20",
+            hinhthucgiao: "Giao hàng tận nơi",
+            thoigiangiao: "17:30",
+            ngaygiaohang: "2024-03-20",
+            diachinhan: "123 Nguyễn Văn A, Quận 1, TP.HCM",
+            tenguoinhan: "Nguyễn Văn A",
+            sdtnhan: "0123456789"
         }
-    }
+    ];
+   
     if (arrDonHang.length == 0) {
-        orderHtml = `<div class="empty-order-section"><img src="./assets/img/empty-order.jpg" alt="" class="empty-order-img"><p>Chưa có đơn hàng nào</p></div>`;
+        orderHtml = `<div class="empty-order-section"><img src="./img/empty-order.jpg" alt="" class="empty-order-img"><p>Chưa có đơn hàng nào</p></div>`;
     } else {
         arrDonHang.forEach(item => {
             let productHtml = `<div class="order-history-group">`;
-            let chiTietDon = getOrderDetails(item.id);
+            let chiTietDon = [
+                {
+                    id: 1,
+                    title: "Xíu mại tôm thịt",
+                    img: "./img/products/xiu_mai_tom_thit_10_vien.jpg",
+                    price: 140000,
+                    soluong: 2,
+                    note: "Không có ghi chú"
+                },
+                {
+                    id: 2,
+                    title: "Rau xào ngũ sắc",
+                    img: "./img/products/rau-xao-ngu-sac.png",
+                    price: 90000,
+                    soluong: 1,
+                    note: "Ít dầu"
+                }
+            ];
             chiTietDon.forEach(sp => {
-                let infosp = getProductInfo(sp.id);
+                let infosp = {
+                    id: sp.id,
+                    title: "Xíu mại tôm thịt",
+                    img: "./img/products/xiu_mai_tom_thit_10_vien.jpg",
+                    price: 140000,
+                    category: "Món mặn",
+                    desc: "Quý khách hấp chín trước khi ăn. Những miếng há cảo, sủi cảo, hoành thánh với phần nhân tôm, sò điệp, hải sản tươi ngon hay nhân thịt heo thơm ngậy chắc chắn sẽ khiến bất kỳ ai thưởng thức đều cảm thấy rất ngon miệng.",
+                    status: 1,
+                    soluong: sp.soluong,
+                    note: sp.note
+                };
+                if(sp.id === 2) {
+                    infosp = {
+                        id: sp.id,
+                        title: "Rau xào ngũ sắc",
+                        img: "./img/products/rau-xao-ngu-sac.png", 
+                        price: 90000,
+                        category: "Món chay",
+                        desc: "Rau củ quả theo mùa tươi mới xào với nước mắm chay, gia vị để giữ được hương vị ngọt tươi nguyên thủy của rau củ, một món nhiều vitamin và chất khoáng, rất dễ ăn.",
+                        status: 1,
+                        soluong: sp.soluong,
+                        note: sp.note
+                    };
+                }
+                
                 productHtml += `<div class="order-history">
                     <div class="order-history-left">
                         <img src="${infosp.img}" alt="">
                         <div class="order-history-info">
-                            <h4>${infosp.title}!</h4>
-                            <p class="order-history-note"><i class="fa-light fa-pen"></i> ${sp.note}</p>
-                            <p class="order-history-quantity">x${sp.soluong}</p>
+                            <h4>${infosp.title}</h4>
+                            <p class="order-history-note"><i class="fa-solid fa-pen"></i> ${infosp.note}</p>
+                            <p class="order-history-quantity">x${infosp.soluong}</p>
                         </div>
                     </div>
                     <div class="order-history-right">
                         <div class="order-history-price">
-                            <span class="order-history-current-price">${vnd(sp.price)}</span>
+                            <span class="order-history-current-price">${vnd(infosp.price)}</span>
                         </div>                         
                     </div>
                 </div>`;
@@ -759,7 +808,7 @@ function renderOrderProduct() {
                 </div>
                 <div class="order-history-total">
                     <span class="order-history-total-desc">Tổng tiền: </span>
-                    <span class="order-history-toltal-price">${vnd(item.tongtien)}</span>
+                    <span class="order-history-toltal-price">${vnd(230000)}</span>
                 </div>
             </div>`
             productHtml += `</div>`;
@@ -774,9 +823,9 @@ function getOrderDetails(madon) {
     let orderDetails = localStorage.getItem("orderDetails") ? JSON.parse(localStorage.getItem("orderDetails")) : [];
     let ctDon = [];
     orderDetails.forEach(item => {
-        if(item.madon == madon) {
+        
             ctDon.push(item);
-        }
+        
     });
     return ctDon;
 }
@@ -848,11 +897,11 @@ function createId(arr) {
 function renderProducts(showProduct) {
     const homeTitle = document.getElementById("home-title");
     const homeProducts = document.getElementById('home-products');
-    
+
     if (!homeProducts) return; // Exit if element doesn't exist
-    
+
     let productHtml = '';
-    if(showProduct.length == 0) {
+    if (showProduct.length == 0) {
         if (homeTitle) homeTitle.style.display = "none";
         productHtml = `<div class="no-result">
             <div class="no-result-h">Tìm kiếm không có kết quả</div>
@@ -900,7 +949,7 @@ function searchProducts(mode) {
     let valueCategory = document.getElementById("advanced-search-category-select").value;
     let minPrice = document.getElementById("min-price").value;
     let maxPrice = document.getElementById("max-price").value;
-    if(parseInt(minPrice) > parseInt(maxPrice) && minPrice != "" && maxPrice != "") {
+    if (parseInt(minPrice) > parseInt(maxPrice) && minPrice != "" && maxPrice != "") {
         alert("Giá đã nhập sai !");
     }
 
@@ -912,16 +961,16 @@ function searchProducts(mode) {
         return item.title.toString().toUpperCase().includes(valeSearchInput.toString().toUpperCase());
     })
 
-    if(minPrice == "" && maxPrice != "") {
+    if (minPrice == "" && maxPrice != "") {
         result = result.filter((item) => item.price <= maxPrice);
     } else if (minPrice != "" && maxPrice == "") {
         result = result.filter((item) => item.price >= minPrice);
-    } else if(minPrice != "" && maxPrice != "") {
+    } else if (minPrice != "" && maxPrice != "") {
         result = result.filter((item) => item.price <= maxPrice && item.price >= minPrice);
     }
 
     document.getElementById("home-service").scrollIntoView();
-    switch (mode){
+    switch (mode) {
         case 0:
             result = JSON.parse(localStorage.getItem('products'));;
             document.querySelector('.form-search-input').value = "";
@@ -930,10 +979,10 @@ function searchProducts(mode) {
             document.getElementById("max-price").value = "";
             break;
         case 1:
-            result.sort((a,b) => a.price - b.price)
+            result.sort((a, b) => a.price - b.price)
             break;
         case 2:
-            result.sort((a,b) => b.price - a.price)
+            result.sort((a, b) => b.price - a.price)
             break;
     }
     showHomeProduct(result)
@@ -1001,13 +1050,10 @@ function showCategory(category) {
     document.getElementById("home-title").scrollIntoView();
 }
 
-let nutthanhtoan = document.querySelector('.thanh-toan')
-let checkoutpage = document.querySelector('.checkout-page');
-nutthanhtoan.addEventListener('click', () => {
-    // ...
-})
 
-document.addEventListener('DOMContentLoaded', function() {
+let checkoutpage = document.querySelector('.checkout-page');
+
+document.addEventListener('DOMContentLoaded', function () {
     // Global variables
     const body = document.querySelector("body");
     const modalContainer = document.querySelectorAll('.modal');
@@ -1032,14 +1078,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Back to top button
-        
+
 
         // Header navigation
         const headerNav = document.querySelector(".header-bottom");
         if (headerNav) {
             let lastScrollY = window.scrollY;
             window.addEventListener("scroll", () => {
-                if(lastScrollY < window.scrollY) {
+                if (lastScrollY < window.scrollY) {
                     headerNav.classList.add("hide");
                 } else {
                     headerNav.classList.remove("hide");
@@ -1050,7 +1096,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Check login status
         kiemtradangnhap();
-        checkAdmin();
     }
 
     // Call initialization
